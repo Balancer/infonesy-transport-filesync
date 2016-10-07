@@ -1,0 +1,20 @@
+{
+	"name": "balancer/infonesy-transport-filesync",
+	"description": "Infonesy file sync (btsync, syncthing and others) transport",
+	"authors": [
+		{
+			"name": "Roman =Balancer= Karshiev",
+			"email": "balancer@balancer.ru"
+		}
+	],
+
+	"require": {
+		"balancer/bors-core": "*"
+	},
+
+	"autoload": {
+		"psr-4": {
+			"Infonesy\\Transport\\": "src/"
+		}
+	}
+}
