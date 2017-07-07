@@ -9,7 +9,8 @@
 	],
 
 	"require": {
-		"balancer/bors-core": "*"
+		"balancer/bors-core": "*",
+		"symfony/yaml": "*"
 	},
 
 	"autoload": {
