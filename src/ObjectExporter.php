@@ -29,6 +29,11 @@ class ObjectExporter
 		$user = $object->infonesy_user();
 		$node = $object->infonesy_node();
 
+		$ct = $object->create_time();
+		$mt = $object->modify_time();
+		if(!$mt)
+			$mt = $ct;
+
 		$data = [
 			'Title' => $object->title(),
 			'UUID' => $object->infonesy_uuid(),
@@ -38,11 +43,11 @@ class ObjectExporter
 				'Title'		=> $user->title(),
 				'EmailMD5'	=> $user->email_md5(),
 				'UUID'		=> $user->infonesy_uuid()],
-			'Date' => date('r', $object->create_time()),
+			'Date' => date('r', $ct),
 			'Type' => $object->infonesy_type(),
 		];
 
-		if($mt = $object->modify_time())
+		if($mt != $ct)
 			$data['Modify'] = date('r', $mt);
 
 //		$file = trim(preg_replace('![^\w\-]+!', '.', $object->class_name().'-'.$object->id()), '.').'.md';
@@ -50,11 +55,14 @@ class ObjectExporter
 
 		$yaml = \Symfony\Component\Yaml\Yaml::dump($data);
 
-		\B2\Files::put_lock("{$this->dir}/$file", "---\n"
+		$file = "{$this->dir}/$file";
+		\B2\Files::put_lock($file, "---\n"
 			. trim($yaml)
 			. "\n---\n\n"
 			. '# '.$object->title()."\n\n"
 			. $object->source()
 		);
+
+		touch($file, $mt);
 	}
 }
