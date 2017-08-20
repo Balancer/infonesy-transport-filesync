@@ -64,5 +64,6 @@ class ObjectExporter
 		);
 
 		touch($file, $mt);
+		return $file;
 	}
 }
