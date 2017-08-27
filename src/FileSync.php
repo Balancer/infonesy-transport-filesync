@@ -2,7 +2,7 @@
 
 namespace Infonesy\Transport;
 
-class FileSync
+class FileSync extends \B2\Obj
 {
 	static function load_file($file)
 	{
@@ -62,5 +62,17 @@ class FileSync
 	static function file_to_bors($file)
 	{
 		return self::map_to_bors(self::load_file($file));
+	}
+
+	function push($object)
+	{
+		$exporter = new ObjectExporter($this->id());
+		$exporter->export($object);
+	}
+
+	function push_md($object)
+	{
+		$exporter = new ObjectExporter($this->id());
+		$exporter->export_md($object);
 	}
 }
