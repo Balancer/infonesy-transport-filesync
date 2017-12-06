@@ -42,10 +42,10 @@ class ObjectExporter
 			'UUID' => $object->infonesy_uuid(),
 //			'Node' => $object->infonesy_node_uuid(),
 //			'TopicUUID' : ru.balancer.tt-rss.digest.201304
-			'Author' => [
+			'Author' => array_filter([
 				'Title'		=> object_property($user, 'title'),
 				'EmailMD5'	=> object_property($user, 'email_md5'),
-				'UUID'		=> object_property($user, 'infonesy_uuid')],
+				'UUID'		=> object_property($user, 'infonesy_uuid')]),
 			'Date' => date('r', $ct),
 			'Type' => $object->infonesy_type(),
 		];
