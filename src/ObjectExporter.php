@@ -20,10 +20,19 @@ class ObjectExporter
 
 		$data = $object->infonesy_data();
 
+		$ct = $object->create_time();
+		$mt = $object->modify_time();
+		if(!$mt)
+			$mt = $ct;
+
 		if(!$file)
 			$file = $object->infonesy_uuid().'.json';
 
-		\B2\Files::put_lock("{$this->dir}/$file", \json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
+		$file = "{$this->dir}/$file";
+
+		\B2\Files::put_lock($file, \json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
+
+		touch($file, $mt);
 	}
 
 	function export_md($object, $file = NULL)
