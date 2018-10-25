@@ -37,7 +37,7 @@ class ObjectExporter
 
 	function export_md($object, $file = NULL)
 	{
-		$container = $object->infonesy_container();
+//		$container = $object->infonesy_container();
 		$user = $object->infonesy_user();
 		$node = $object->infonesy_node();
 
@@ -58,6 +58,9 @@ class ObjectExporter
 			'Date' => date('r', $ct),
 			'Type' => $object->infonesy_type(),
 		];
+
+		if($markup = $object->get('infonesy_markup_type'))
+			$data['Markup'] = $markup;
 
 		if($mt != $ct)
 			$data['Modify'] = date('r', $mt);
